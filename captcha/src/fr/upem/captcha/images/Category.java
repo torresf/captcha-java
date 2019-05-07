@@ -1,3 +1,10 @@
+/**
+ * @authors Florian Torres - Stella Poulain
+ * @date : 7 mai 2019
+ * @file : Category.java
+ * @package : fr.upem.captcha.images
+ */
+
 package fr.upem.captcha.images;
 
 import java.net.URL;

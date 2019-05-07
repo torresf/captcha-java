@@ -1,5 +1,5 @@
 /**
- * @authors : Stella POULAIN - Florian TORRES
+ * @authors Florian Torres - Stella Poulain
  * @date : 7 mai 2019
  * @file : Images.java
  * @package : fr.upem.captcha.images

@@ -1,3 +1,10 @@
+/**
+ * @authors Florian Torres - Stella Poulain
+ * @date : 7 mai 2019
+ * @file : MainUi.java
+ * @package : fr.upem.captcha.ui
+ */
+
 package fr.upem.captcha.ui;
 
 import java.awt.Color;
