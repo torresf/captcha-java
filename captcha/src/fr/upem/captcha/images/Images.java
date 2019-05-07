@@ -14,4 +14,10 @@ public interface Images {
 	
 	public List<URL> getPhotos();
 
+	public List<URL> getRandomPhotosURL(int value);
+
+	public List<URL> getRandomPhotoURL();
+	
+	public boolean isPhotoCorrect(URL url);
+	
 }
