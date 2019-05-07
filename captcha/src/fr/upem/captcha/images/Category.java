@@ -18,4 +18,22 @@ public class Category implements Images {
 		return null;
 	}
 
+	@Override
+	public List<URL> getRandomPhotosURL(int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<URL> getRandomPhotoURL() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isPhotoCorrect(URL url) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }
