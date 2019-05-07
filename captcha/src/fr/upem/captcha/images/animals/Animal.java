@@ -14,10 +14,4 @@ import fr.upem.captcha.images.Category;
 
 public class Animal extends Category {
 
-	@Override
-	public List<URL> getPhotos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
