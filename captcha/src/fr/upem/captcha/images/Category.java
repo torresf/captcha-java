@@ -37,10 +37,8 @@ public class Category implements Images {
 								.collect(Collectors.toList());
 
 			for (String image : images) {
-				System.out.println(image);
-				photos.add(this.getClass().getResource(image));
+				photos.add(this.getClass().getResource(image.replace("src/fr/upem/captcha/images/","")));
 			}
-			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -105,7 +103,7 @@ public class Category implements Images {
 //			}
 //		}
 //		
-//		this.photos = photos;
+		this.photos = photos;
 //		System.out.println("Photos");
 //		System.out.println(photos.size());
 		System.out.println(photos);
