@@ -31,15 +31,21 @@ public class Category implements Images {
 		
 		try (Stream<Path> walk = Files.walk(currentRelativePath)) {
 
-			List<String> result = walk.filter(Files::isRegularFile)
-					.map(x -> x.toString()).collect(Collectors.toList());
+			List<String> images = walk.filter(Files::isRegularFile)
+								.map(x -> x.toString())
+								.filter(n -> n.contains(".jpg") || n.contains(".png"))
+								.collect(Collectors.toList());
 
-			result.forEach(System.out::println);
-			photos.add()
+			for (String image : images) {
+				System.out.println(image);
+				photos.add(this.getClass().getResource(image));
+			}
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 //		// On récupère les sous-dossiers (c'est à dire les categories)
 //		List<String> directories = null;
 //
@@ -50,12 +56,11 @@ public class Category implements Images {
 //			        .filter(n -> !n.contains("."))
 //			        .collect(Collectors.toList());
 //			directories.remove(0); // On enlève le 0 car c'est le nom du dossier courant
-//			System.out.println("Directories");
-//			System.out.println(directories);
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//		
+//
+//		System.out.println("Directories");
 //		System.out.println(directories);
 //		
 //		// Pour chaque sous-dossier, on récupère les images
@@ -71,8 +76,8 @@ public class Category implements Images {
 //				        .map(Path::toString)
 //				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
 //				        .collect(Collectors.toList());
-//				System.out.println("images");
-//				System.out.println(images);
+////				System.out.println("images");
+////				System.out.println(images);
 //			} catch (IOException e) {
 //				e.printStackTrace();
 //			}
@@ -103,7 +108,7 @@ public class Category implements Images {
 //		this.photos = photos;
 //		System.out.println("Photos");
 //		System.out.println(photos.size());
-//		System.out.println(photos);
+		System.out.println(photos);
 		return photos;
 	}
 
