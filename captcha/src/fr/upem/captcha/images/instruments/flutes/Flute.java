@@ -5,7 +5,6 @@
  * @package : fr.upem.captcha.images.instruments.flutes
  */
 
-
 package fr.upem.captcha.images.instruments.flutes;
 
 import fr.upem.captcha.images.instruments.Instrument;
