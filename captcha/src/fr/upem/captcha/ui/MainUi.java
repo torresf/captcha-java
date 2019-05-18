@@ -81,7 +81,7 @@ public class MainUi {
 	}
 
 	private static JButton createOkButton(){
-		return new JButton(new AbstractAction("Check") { //ajouter l'action du bouton
+		return new JButton(new AbstractAction("Check") { // ajouter l'action du bouton
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -89,8 +89,14 @@ public class MainUi {
 
 					@Override
 					public void run() { // c'est un runnable
+						LogicEngine logicEngine = new LogicEngine();
 						System.out.println("J'ai cliquÃ© sur Ok");
-						System.out.println(selectedImages);
+						if (logicEngine.isCaptchaCorrect(selectedImages)) {
+							System.out.println("C'est juste !");
+						} else {
+							System.out.println("C'est faux !");
+							// TODO relancer le captcha avec un niveau de difficulté supérieur.
+						}
 					}
 				});
 			}

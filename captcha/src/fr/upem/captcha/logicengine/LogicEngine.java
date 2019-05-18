@@ -106,6 +106,8 @@ public class LogicEngine {
 	 */
 	public void setGridImages() {
 		gridImages.clear();
+		
+		// Set numberOfCorrectImages randomly between 1 and 4
 		this.numberOfCorrectImages = (int)((Math.random() * 4) + 1);
 		
 		// Get n images form the selected category (with n = numberOfCorrectImages)
@@ -153,5 +155,19 @@ public class LogicEngine {
 	 */
 	public List<URL> getGridImages() {
 		return gridImages;
+	}
+	
+	
+	public boolean isCaptchaCorrect(List<URL> images) {
+		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
+		if (images.size() != numberOfCorrectImages) {
+			return false;
+		}
+		for (URL image : images) {
+			if (!selectedCategory.isPhotoCorrect(image)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
