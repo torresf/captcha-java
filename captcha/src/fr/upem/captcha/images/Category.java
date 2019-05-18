@@ -16,93 +16,75 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Category implements Images {
+abstract public class Category implements Images {
 	List<URL> photos = new ArrayList<URL>();
+	
+	public Category() {
+		super();
+		this.getPhotos();
+	}
 
 	@Override
 	public List<URL> getPhotos() {
+		System.out.println("getPhotos");
 		List<URL> photos = new ArrayList<URL>();
 		
 		String packageName = "src/"+this.getClass().getPackage().getName();
 		String currentPath = packageName.replace('.', '/');
 		Path currentRelativePath = Paths.get(currentPath);
 		
-		try (Stream<Path> walk = Files.walk(currentRelativePath)) {
+		// On rÈcupËre les dossiers de catÈgories
+		List<String> directories = null;
 
-			List<String> images = walk.filter(Files::isRegularFile)
-								.map(x -> x.toString())
-								.filter(n -> n.contains(".jpg") || n.contains(".png"))
-								.collect(Collectors.toList());
-
-			for (String image : images) {
-				photos.add(this.getClass().getResource(image.replace("src/fr/upem/captcha/images/","")));
-			}
-
+		try {
+			directories = Files.walk(currentRelativePath, 1)
+			        .map(Path::getFileName)
+			        .map(Path::toString)
+			        .filter(n -> !n.contains("."))
+			        .collect(Collectors.toList());
+			directories.remove(0); // On enlËve le 0 car c'est le nom du dossier courant
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		
-//		// On r√©cup√®re les sous-dossiers (c'est √† dire les categories)
-//		List<String> directories = null;
-//
-//		try {
-//			directories = Files.walk(currentRelativePath, 1)
-//			        .map(Path::getFileName)
-//			        .map(Path::toString)
-//			        .filter(n -> !n.contains("."))
-//			        .collect(Collectors.toList());
-//			directories.remove(0); // On enl√®ve le 0 car c'est le nom du dossier courant
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		System.out.println("Directories");
-//		System.out.println(directories);
-//		
-//		// Pour chaque sous-dossier, on r√©cup√®re les images
-//		for (String directory : directories) {
-//			Path childPath = Paths.get(currentPath + "/" + directory);
-//			System.out.println("Directory :");
-//			System.out.println(directory);
-//			// On r√©cup√®re les images
-//			List<String> images = null;
-//			try {
-//				images = Files.walk(childPath, 2)
-//				        .map(Path::getFileName)
-//				        .map(Path::toString)
-//				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
-//				        .collect(Collectors.toList());
-////				System.out.println("images");
-////				System.out.println(images);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			for (String image : images) {
-////				System.out.println(directory+"/"+image);
-////				System.out.println(this.getClass().getResource(directory+"/"+image));
-//				photos.add(this.getClass().getResource(directory+"/"+image));
-//			}
-//		}
-//		
-//		// S'il n'y a pas de sous dossier, on r√©cup√®re les images directement dans le dossier actuel
-//		if (directories.isEmpty()) {
-//			List<String> images = null;
-//			try {
-//				images = Files.walk(currentRelativePath, 1)
-//				        .map(Path::getFileName)
-//				        .map(Path::toString)
-//				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
-//				        .collect(Collectors.toList());
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			for (String image : images) {
-//				photos.add(this.getClass().getResource(image));
-//			}
-//		}
-//		
+		// Pour chaque catÈgorie, on rÈcupËre les sous direcotry
+		for (String directory : directories) {
+			Path childPath = Paths.get(currentPath + "/" + directory);
+			// On rÈcupËre les images
+			List<String> images = null;
+			try {
+				images = Files.walk(childPath, 2)
+				        .map(Path::getFileName)
+				        .map(Path::toString)
+				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
+				        .collect(Collectors.toList());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			for (String image : images) {
+				photos.add(this.getClass().getResource(directory + "/" + image));
+			}
+		}
+
+		// S'il n'y a pas de sous dossier, on r√©cup√®re les images directement dans le dossier actuel
+		if (directories.isEmpty()) {
+			List<String> images = null;
+			try {
+				images = Files.walk(currentRelativePath, 1)
+				        .map(Path::getFileName)
+				        .map(Path::toString)
+				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
+				        .collect(Collectors.toList());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			for (String image : images) {
+				photos.add(this.getClass().getResource(image));
+			}
+		}
+
 		this.photos = photos;
 		System.out.println(photos);
 		return photos;
@@ -146,6 +128,11 @@ public class Category implements Images {
 	public boolean isPhotoCorrect(URL url) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
 	}
 	
 }
