@@ -83,6 +83,11 @@ public class MainUi {
 	private static JButton createOkButton(){
 		return new JButton(new AbstractAction("Check") { // ajouter l'action du bouton
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
@@ -90,12 +95,12 @@ public class MainUi {
 					@Override
 					public void run() { // c'est un runnable
 						LogicEngine logicEngine = LogicEngine.getInstance();
-						System.out.println("J'ai cliqué sur Ok");
+						System.out.println("I clicked Ok");
 						if (logicEngine.isCaptchaCorrect(selectedImages)) {
-							System.out.println("C'est juste !");
+							System.out.println("Right, you're not a robot !");
 						} else {
-							System.out.println("C'est faux !");
-							// TODO relancer le captcha avec un niveau de difficult� sup�rieur.
+							System.out.println("Are you dumb or a robot ?");
+							// TODO relancer le captcha avec un niveau de difficulté supérieur.
 						}
 					}
 				});
