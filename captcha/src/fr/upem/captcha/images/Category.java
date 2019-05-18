@@ -23,13 +23,13 @@ abstract public class Category implements Images {
 	
 	public Category() {
 		super();
+		this.photos = new ArrayList<URL>();
 		this.getPhotos();
 	}
 	
 	@Override
 	public List<URL> getPhotos() {
-		System.out.println("getPhotos");
-		List<URL> photos = new ArrayList<URL>();
+		photos.clear();
 		
 		String packageName = "src/"+this.getClass().getPackage().getName();
 		String currentPath = packageName.replace('.', '/');
@@ -85,9 +85,7 @@ abstract public class Category implements Images {
 				photos.add(this.getClass().getResource(image));
 			}
 		}
-
-		this.photos = photos;
-		System.out.println(photos);
+		
 		return photos;
 	}
 

@@ -40,7 +40,7 @@ public class MainUi {
 		System.out.println("- Main");
 		
 		LogicEngine logicEngine = new LogicEngine();
-		String selectedCategory = logicEngine.selectRandomCategory();
+		String selectedCategory = logicEngine.getSelectedCategory();
 
 		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 
@@ -53,8 +53,8 @@ public class MainUi {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 
 		JButton okButton = createOkButton();
-System.out.println("ici");
-		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
+		
+		/* frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
 		frame.add(createLabelImage("le havre.jpg"));
 		frame.add(createLabelImage("panneau 70.jpg"));
 		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
@@ -62,9 +62,13 @@ System.out.println("ici");
 		frame.add(createLabelImage("route panneau.jpg"));
 		frame.add(createLabelImage("tour eiffel.jpg"));
 		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg"));
-
-System.out.println("là");
+		frame.add(createLabelImage("voie pieton.jpg")); */
+		
+		// Fill the grid with random images
+		for (URL image : logicEngine.getGridImages()) {
+			frame.add(createLabelImage(image));
+		}
+		
 		frame.add(new JTextArea("Click on " + selectedCategory + " images."));
 
 		frame.add(okButton);
@@ -86,15 +90,17 @@ System.out.println("là");
 					@Override
 					public void run() { // c'est un runnable
 						System.out.println("J'ai cliqué sur Ok");
+						System.out.println(selectedImages);
 					}
 				});
 			}
 		});
 	}
-	private static JLabel createLabelImage(String imageLocation) throws IOException{
 
-		final URL url = MainUi.class.getResource(imageLocation); // Aller chercher les images !! IMPORTANT
-//		final URL url = imageLocation; // Aller chercher les images !! IMPORTANT
+	private static JLabel createLabelImage(URL imageLocation) throws IOException{
+
+//		final URL url = MainUi.class.getResource(imageLocation); // Aller chercher les images !! IMPORTANT
+		final URL url = imageLocation;
 
 		System.out.println(url);
 
@@ -103,7 +109,7 @@ System.out.println("là");
 
 		final JLabel label = new JLabel(new ImageIcon(sImage)); // créer le composant pour ajouter l'image dans la fenêtre
 
-		label.addMouseListener(new MouseListener() { // Ajouter le listener d'évenement de souris
+		label.addMouseListener(new MouseListener() { // Ajouter le listener d'�venement de souris
 			private boolean isSelected = false;
 
 
@@ -113,7 +119,6 @@ System.out.println("là");
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-
 			}
 
 			@Override
@@ -127,7 +132,7 @@ System.out.println("là");
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent arg0) { //ce qui nous intéresse c'est lorsqu'on clique sur une image, il y a donc des choses à faire ici
+			public void mouseClicked(MouseEvent arg0) { // Ce qui nous int�resse c'est lorsqu'on clique sur une image, il y a donc des choses � faire ici
 				EventQueue.invokeLater(new Runnable() {
 
 					@Override
