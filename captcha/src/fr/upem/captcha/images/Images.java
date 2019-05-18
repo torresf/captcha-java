@@ -28,7 +28,10 @@ public interface Images {
 	public List<URL> getRandomPhotosURL(int value);
 
 	public List<URL> getRandomPhotoURL();
-	
+	/**
+	 * @param URL
+	 * @return boolean that permits to check if it is the correct category selected
+	 */
 	public boolean isPhotoCorrect(URL url);
 	
 }

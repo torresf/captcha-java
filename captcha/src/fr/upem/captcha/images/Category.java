@@ -125,13 +125,12 @@ abstract public class Category implements Images {
 
 	@Override
 	public boolean isPhotoCorrect(URL url) {
-		// TODO Auto-generated method stub
-		return false;
+		String currentCategory = this.getClass().getPackage().getName().replace(".", "/");
+		return url.toString().contains(currentCategory);
 	}
 	
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
-	
 }

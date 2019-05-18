@@ -72,6 +72,7 @@ public class LogicEngine {
 	}
 	
 	/**
+	 * @param
 	 * It increases the difficultyLevel when the user doesn't perfom the previous level
 	 * 
 	 */
@@ -89,10 +90,20 @@ public class LogicEngine {
 		selectedCategory = categories.get(0);
 	}
 	
+	/**
+	 * @param
+	 * @return String which is the selectedCategory
+	 *
+	 */
 	public String getSelectedCategory() {
 		return selectedCategory.toString();
 	}
 	
+	/**
+	 * @param
+	 * @return void
+	 *	Fills the grid with the correct and incorrect categories
+	 */
 	public void setGridImages() {
 		gridImages.clear();
 		this.numberOfCorrectImages = (int)((Math.random() * 4) + 1);
@@ -134,6 +145,12 @@ public class LogicEngine {
 		Collections.shuffle(gridImages);
 	}
 	
+
+	/**
+	 * @param
+	 * @return List<URL> which is the entire grid to display
+	 *
+	 */
 	public List<URL> getGridImages() {
 		return gridImages;
 	}
