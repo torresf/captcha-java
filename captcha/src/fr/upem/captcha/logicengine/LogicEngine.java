@@ -22,6 +22,8 @@ import fr.upem.captcha.images.instruments.flutes.Flute;
 
 
 public class LogicEngine {
+	private static final LogicEngine instance = new LogicEngine();
+	
 	private ArrayList<Category> categories; // All the categories
 	private Category selectedCategory; // Selected category to click on
 	private int difficultyLevel; // Difficulty level of the captcha
@@ -35,7 +37,7 @@ public class LogicEngine {
 	 * Set difficultyLevel at 2
 	 * Create the ArrayList Category
 	 */
-	public LogicEngine() {
+	private LogicEngine() {
 		difficultyLevel = 2;
 		categories = new ArrayList<Category>();
 		categories = getCategories();
@@ -43,6 +45,12 @@ public class LogicEngine {
 		selectRandomCategory();
 		setGridImages();
 	}
+	
+	public static final LogicEngine getInstance() 
+    {
+        return instance;
+    }
+
 	
 	/**
 	 * @param
@@ -109,7 +117,7 @@ public class LogicEngine {
 		
 		// Set numberOfCorrectImages randomly between 1 and 4
 		this.numberOfCorrectImages = (int)((Math.random() * 4) + 1);
-		
+		System.out.println("numberOfCorrectImages : " + numberOfCorrectImages);
 		// Get n images form the selected category (with n = numberOfCorrectImages)
 		List<URL> allCorrectImages = selectedCategory.getPhotos();
 		Collections.shuffle(allCorrectImages);
@@ -159,12 +167,14 @@ public class LogicEngine {
 	
 	public boolean isCaptchaCorrect(List<URL> images) {
 		// TODO : Check nombre d'images selectionn�es + si ils sont dans la bonne cat�gorie
+		System.out.println("numberOfCorrectImages2 : " + numberOfCorrectImages);
 		if (images.size() != numberOfCorrectImages) {
+			System.out.println("You didn't select all the images.");
 			return false;
 		}
 		for (URL image : images) {
 			if (!selectedCategory.isPhotoCorrect(image)) {
-				System.out.println("in Logic" + image);
+				System.out.println("Some pictures are not in the right Category");
 				return false;
 			}
 		}

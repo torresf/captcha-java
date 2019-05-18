@@ -39,7 +39,7 @@ public class MainUi {
 	public static void main(String[] args) throws IOException {
 		System.out.println("- Main");
 		
-		LogicEngine logicEngine = new LogicEngine();
+		LogicEngine logicEngine = LogicEngine.getInstance();
 		String selectedCategory = logicEngine.getSelectedCategory();
 
 		JFrame frame = new JFrame("Captcha"); // Création de la fenêtre principale
@@ -89,7 +89,7 @@ public class MainUi {
 
 					@Override
 					public void run() { // c'est un runnable
-						LogicEngine logicEngine = new LogicEngine();
+						LogicEngine logicEngine = LogicEngine.getInstance();
 						System.out.println("J'ai cliqué sur Ok");
 						if (logicEngine.isCaptchaCorrect(selectedImages)) {
 							System.out.println("C'est juste !");
