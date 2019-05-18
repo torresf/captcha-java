@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+
 abstract public class Category implements Images {
 	List<URL> photos = new ArrayList<URL>();
 	
@@ -24,7 +25,7 @@ abstract public class Category implements Images {
 		super();
 		this.getPhotos();
 	}
-
+	
 	@Override
 	public List<URL> getPhotos() {
 		System.out.println("getPhotos");
@@ -34,7 +35,7 @@ abstract public class Category implements Images {
 		String currentPath = packageName.replace('.', '/');
 		Path currentRelativePath = Paths.get(currentPath);
 		
-		// On récupère les dossiers de catégories
+		// Getting all sub directories
 		List<String> directories = null;
 
 		try {
@@ -43,16 +44,16 @@ abstract public class Category implements Images {
 			        .map(Path::toString)
 			        .filter(n -> !n.contains("."))
 			        .collect(Collectors.toList());
-			directories.remove(0); // On enlève le 0 car c'est le nom du dossier courant
+			directories.remove(0); // Remove the current directory
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		
-		// Pour chaque catégorie, on récupère les sous direcotry
+		// For each categogy, we get the sub-directory
 		for (String directory : directories) {
 			Path childPath = Paths.get(currentPath + "/" + directory);
-			// On récupère les images
+			// Getting images
 			List<String> images = null;
 			try {
 				images = Files.walk(childPath, 2)

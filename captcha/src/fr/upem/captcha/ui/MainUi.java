@@ -53,7 +53,7 @@ public class MainUi {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 
 		JButton okButton = createOkButton();
-
+System.out.println("ici");
 		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
 		frame.add(createLabelImage("le havre.jpg"));
 		frame.add(createLabelImage("panneau 70.jpg"));
@@ -63,7 +63,8 @@ public class MainUi {
 		frame.add(createLabelImage("tour eiffel.jpg"));
 		frame.add(createLabelImage("ville espace verts.jpg"));
 		frame.add(createLabelImage("voie pieton.jpg"));
-		
+
+System.out.println("là");
 		frame.add(new JTextArea("Click on " + selectedCategory + " images."));
 
 		frame.add(okButton);
@@ -71,13 +72,12 @@ public class MainUi {
 		frame.setVisible(true);
 	}
 
-
 	private static GridLayout createLayout(){
 		return new GridLayout(4,3);
 	}
 
 	private static JButton createOkButton(){
-		return new JButton(new AbstractAction("Vérifier") { //ajouter l'action du bouton
+		return new JButton(new AbstractAction("Check") { //ajouter l'action du bouton
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -91,7 +91,6 @@ public class MainUi {
 			}
 		});
 	}
-
 	private static JLabel createLabelImage(String imageLocation) throws IOException{
 
 		final URL url = MainUi.class.getResource(imageLocation); // Aller chercher les images !! IMPORTANT

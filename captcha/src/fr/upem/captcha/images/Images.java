@@ -13,15 +13,17 @@ import java.util.List;
 
 public interface Images {
 
-	/** 
-	 * Méthode qui retourne une liste d'URL (du chemin) des photos de toutes les classes
+	/**
+	 * @param
 	 * @return List<URL>
+	 * This method is getting all pictures found in the sub directories and filling the photos List<URL>
+	 *  
 	 */
 	public List<URL> getPhotos();
 	
 	/**
-	 * 
-	 *
+	 * @param int
+	 * @return List<URL>
 	 */
 	public List<URL> getRandomPhotosURL(int value);
 
