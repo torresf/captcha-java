@@ -104,8 +104,6 @@ public class Category implements Images {
 //		}
 //		
 		this.photos = photos;
-//		System.out.println("Photos");
-//		System.out.println(photos.size());
 		System.out.println(photos);
 		return photos;
 	}
