@@ -172,7 +172,7 @@ public class LogicEngine {
 	 *
 	 */
 	public boolean isCaptchaCorrect(List<URL> images) {
-		// TODO : Check nombre d'images selectionn�es + si ils sont dans la bonne cat�gorie
+		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
 		System.out.println("numberOfCorrectImages2 : " + numberOfCorrectImages);
 		if (images.size() != numberOfCorrectImages) {
 			System.out.println("You didn't select all the images.");

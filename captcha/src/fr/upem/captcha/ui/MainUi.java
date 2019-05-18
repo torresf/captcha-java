@@ -69,11 +69,33 @@ public class MainUi {
 			frame.add(createLabelImage(image));
 		}
 		
-		frame.add(new JTextArea("Click on " + selectedCategory + " images."));
+		JTextArea instruction1 = createTextArea(1, selectedCategory);
+		frame.add(instruction1);
 
 		frame.add(okButton);
+		
+//		JTextArea instruction2 = createTextArea(2, "");
+//		frame.add(instruction2);
+//		
+//		JTextArea instruction3 = createTextArea(3, "");
+//		frame.add(instruction3);
 
 		frame.setVisible(true);
+//		frame.getContentPane().validate();
+//		frame.getContentPane().repaint();
+	}
+
+	private static JTextArea createTextArea(int instructionID, String selectedCategory) {
+		switch (instructionID) {
+			case 1:
+				return new JTextArea("Click on " + selectedCategory + " images.");
+			case 2:
+				return new JTextArea("You're right, you're not a robot");
+			case 3:
+				return new JTextArea("You're wrong, you're a robot or a dumb guy");
+			default:
+				return new JTextArea("Click on " + selectedCategory + " images.");
+		}
 	}
 
 	private static GridLayout createLayout(){
@@ -83,9 +105,6 @@ public class MainUi {
 	private static JButton createOkButton(){
 		return new JButton(new AbstractAction("Check") { // ajouter l'action du bouton
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
