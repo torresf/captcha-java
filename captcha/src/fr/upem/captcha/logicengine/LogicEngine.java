@@ -139,7 +139,6 @@ public class LogicEngine {
 		ArrayList<Category> incorrectCategories = new ArrayList<Category>(categories);
 		incorrectCategories.remove(selectedCategory);
 		for (Category cat : incorrectCategories) {
-System.out.println(cat);
 			for (URL photo : cat.getPhotos()) {
 				allIncorrectImages.add(photo);
 			}
