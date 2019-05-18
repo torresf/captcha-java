@@ -126,6 +126,7 @@ abstract public class Category implements Images {
 	@Override
 	public boolean isPhotoCorrect(URL url) {
 		String currentCategory = this.getClass().getPackage().getName().replace(".", "/");
+		System.out.println("CATEGORY" + currentCategory);
 		return url.toString().contains(currentCategory);
 	}
 	

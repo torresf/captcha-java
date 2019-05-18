@@ -42,7 +42,7 @@ public class MainUi {
 		LogicEngine logicEngine = new LogicEngine();
 		String selectedCategory = logicEngine.getSelectedCategory();
 
-		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
+		JFrame frame = new JFrame("Captcha"); // Création de la fenêtre principale
 
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 
@@ -95,7 +95,7 @@ public class MainUi {
 							System.out.println("C'est juste !");
 						} else {
 							System.out.println("C'est faux !");
-							// TODO relancer le captcha avec un niveau de difficult� sup�rieur.
+							// TODO relancer le captcha avec un niveau de difficult� sup�rieur.
 						}
 					}
 				});

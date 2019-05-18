@@ -147,7 +147,6 @@ public class LogicEngine {
 		Collections.shuffle(gridImages);
 	}
 	
-
 	/**
 	 * @param
 	 * @return List<URL> which is the entire grid to display
@@ -159,12 +158,13 @@ public class LogicEngine {
 	
 	
 	public boolean isCaptchaCorrect(List<URL> images) {
-		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
+		// TODO : Check nombre d'images selectionnï¿½es + si ils sont dans la bonne catï¿½gorie
 		if (images.size() != numberOfCorrectImages) {
 			return false;
 		}
 		for (URL image : images) {
 			if (!selectedCategory.isPhotoCorrect(image)) {
+				System.out.println("in Logic" + image);
 				return false;
 			}
 		}
