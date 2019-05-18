@@ -41,8 +41,7 @@ public class MainUi {
 		
 		LogicEngine logicEngine = new LogicEngine();
 		String selectedCategory = logicEngine.selectRandomCategory();
-		System.out.println(selectedCategory);
-		
+
 		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
@@ -65,7 +64,7 @@ public class MainUi {
 		frame.add(createLabelImage("ville espace verts.jpg"));
 		frame.add(createLabelImage("voie pieton.jpg"));
 		
-		frame.add(new JTextArea("Cliquez sur les images de " + selectedCategory));
+		frame.add(new JTextArea("Click on " + selectedCategory + " images."));
 
 		frame.add(okButton);
 
