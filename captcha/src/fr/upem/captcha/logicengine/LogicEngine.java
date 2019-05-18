@@ -19,6 +19,7 @@ import fr.upem.captcha.images.animals.cats.Cat;
 import fr.upem.captcha.images.animals.dogs.Dog;
 import fr.upem.captcha.images.instruments.Instrument;
 import fr.upem.captcha.images.instruments.flutes.Flute;
+import fr.upem.captcha.images.instruments.guitars.Guitar;
 
 
 public class LogicEngine {
@@ -67,6 +68,7 @@ public class LogicEngine {
 				break;
 			case 2:
 				categories.add(new Dog());
+				categories.add(new Guitar());
 				categories.add(new Cat());
 				categories.add(new Flute());
 				break;
@@ -137,6 +139,7 @@ public class LogicEngine {
 		ArrayList<Category> incorrectCategories = new ArrayList<Category>(categories);
 		incorrectCategories.remove(selectedCategory);
 		for (Category cat : incorrectCategories) {
+System.out.println(cat);
 			for (URL photo : cat.getPhotos()) {
 				allIncorrectImages.add(photo);
 			}
@@ -164,7 +167,11 @@ public class LogicEngine {
 		return gridImages;
 	}
 	
-	
+	/**
+	 * @param List<URL> of selected images
+	 * @return boolean if it's correct return true, else false
+	 *
+	 */
 	public boolean isCaptchaCorrect(List<URL> images) {
 		// TODO : Check nombre d'images selectionn�es + si ils sont dans la bonne cat�gorie
 		System.out.println("numberOfCorrectImages2 : " + numberOfCorrectImages);
