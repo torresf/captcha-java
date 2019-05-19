@@ -23,14 +23,15 @@ import fr.upem.captcha.images.instruments.guitars.Guitar;
 
 
 public class LogicEngine {
-	private static final LogicEngine instance = new LogicEngine();
+	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton
 	
 	private ArrayList<Category> categories; // All the categories
 	private Category selectedCategory; // Selected category to click on
 	private int difficultyLevel; // Difficulty level of the captcha
-	private List<URL> gridImages; // 9 images of the grid
+	private List<URL> gridImages; // Images of the grid
 	private List<URL> correctImages; // Correct image of the grid
 	private int numberOfCorrectImages; // Number of correct images to choose
+	private int gridSize = 9; // Maximum number of images in the grid
 	
 	/**
 	 * @param
@@ -39,7 +40,7 @@ public class LogicEngine {
 	 * Create the ArrayList Category
 	 */
 	private LogicEngine() {
-		difficultyLevel = 2;
+		difficultyLevel = 1;
 		categories = new ArrayList<Category>();
 		categories = getCategories();
 		gridImages = new ArrayList<URL>();
@@ -83,7 +84,7 @@ public class LogicEngine {
 	
 	/**
 	 * @param
-	 * It increases the difficultyLevel when the user doesn't perfom the previous level
+	 * It increases the difficultyLevel when the user doesn't perform the previous level
 	 * 
 	 */
 	public void increaseDifficultyLevel() {
@@ -115,18 +116,14 @@ public class LogicEngine {
 	 *	Fills the grid with the correct and incorrect categories
 	 */
 	public void setGridImages() {
+		// Clear the grid
 		gridImages.clear();
 		
 		// Set numberOfCorrectImages randomly between 1 and 4
 		this.numberOfCorrectImages = (int)((Math.random() * 4) + 1);
-		System.out.println("numberOfCorrectImages : " + numberOfCorrectImages);
-		// Get n images form the selected category (with n = numberOfCorrectImages)
-		List<URL> allCorrectImages = selectedCategory.getPhotos();
-		Collections.shuffle(allCorrectImages);
-		correctImages = allCorrectImages
-				.stream()
-				.limit(numberOfCorrectImages)
-				.collect(Collectors.toList());
+		
+		// Get some correct images from the selected category
+		correctImages = selectedCategory.getRandomPhotosURL(numberOfCorrectImages);
 		
 		// Add the correct images to the grid
 		for (URL image : correctImages) {
@@ -144,16 +141,18 @@ public class LogicEngine {
 			}
 		}
 		
-		// We only need 9 - n false images (with n = numberOfCorrectImages)
+		// We only need (gridSize - numberOfCorrectImages) false images
 		incorrectImages = allIncorrectImages
 				.stream()
-				.limit(9 - numberOfCorrectImages)
+				.limit(gridSize - numberOfCorrectImages)
 				.collect(Collectors.toList());
 		
 		// Add the incorrect images to the grid
 		for (URL image : incorrectImages) {
 			gridImages.add(image);
 		}
+
+		// Shuffle the grid
 		Collections.shuffle(gridImages);
 	}
 	
@@ -175,12 +174,12 @@ public class LogicEngine {
 		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
 		System.out.println("numberOfCorrectImages2 : " + numberOfCorrectImages);
 		if (images.size() != numberOfCorrectImages) {
-			System.out.println("You didn't select all the images.");
+			System.out.println("You didn't select the correct number of images.");
 			return false;
 		}
 		for (URL image : images) {
 			if (!selectedCategory.isPhotoCorrect(image)) {
-				System.out.println("Some pictures are not in the right Category");
+				System.out.println("Some pictures are not from the right category");
 				return false;
 			}
 		}

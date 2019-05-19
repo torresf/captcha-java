@@ -13,13 +13,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 
 abstract public class Category implements Images {
-	List<URL> photos = new ArrayList<URL>();
+	private List<URL> photos = new ArrayList<URL>();
 	
 	public Category() {
 		super();
@@ -35,7 +36,7 @@ abstract public class Category implements Images {
 		String currentPath = packageName.replace('.', '/');
 		Path currentRelativePath = Paths.get(currentPath);
 		
-		// Getting all sub directories
+		// Getting the directories for the main categories
 		List<String> directories = null;
 
 		try {
@@ -48,7 +49,6 @@ abstract public class Category implements Images {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		
 		// For each categogy, we get the sub-directory
 		for (String directory : directories) {
@@ -91,36 +91,26 @@ abstract public class Category implements Images {
 
 	@Override
 	public List<URL> getRandomPhotosURL(int value) {
-		if (this.photos.isEmpty()) getPhotos();
-		List<URL> photos = this.photos;
-		List<URL> randomPhotos = new ArrayList<URL>();
-		Random randomGenerator = new Random();
-		List<Integer> randomNumbers = new ArrayList<Integer>();
-		
-		if (photos.size() == 0) {
-			throw new IllegalArgumentException("Il n'y a aucune photo pour cette classe");
-		}
-		else if (value > photos.size()) {
-			throw new IllegalArgumentException("La valeur doit être inférieure à " + photos.size());
+		if (this.photos.isEmpty()) {
+			getPhotos();
 		}
 		
-		int randomNumber;
-		for (int i = 0; i < value; i++) {
-			do {
-				randomNumber = randomGenerator.nextInt(photos.size());
-			} while(randomNumbers.contains(randomNumber));
-			
-			randomNumbers.add(randomNumber);
-			randomPhotos.add(photos.get(randomNumber));
+		List<URL> allImages = new ArrayList<URL>(this.photos);
+		if (allImages.size() == 0) {
+			throw new IllegalArgumentException("The category " + this.toString() + " has no pictures.");
+		} else if (value > allImages.size()) {
+			throw new IllegalArgumentException("The value should be less than or equal to " + allImages.size());
 		}
-		
-		return randomPhotos;
+		Collections.shuffle(allImages);
+		return allImages
+				.stream()
+				.limit(value)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<URL> getRandomPhotoURL() {
-		// TODO Auto-generated method stub
-		return null;
+		return getRandomPhotosURL(1);
 	}
 
 	@Override

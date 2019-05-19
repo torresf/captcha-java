@@ -42,27 +42,17 @@ public class MainUi {
 		LogicEngine logicEngine = LogicEngine.getInstance();
 		String selectedCategory = logicEngine.getSelectedCategory();
 
-		JFrame frame = new JFrame("Captcha"); // CrÃ©ation de la fenÃªtre principale
+		JFrame frame = new JFrame("Captcha"); // Création de la fenêtre principale
 
-		GridLayout layout = createLayout();  // CrÃ©ation d'un layout de type Grille avec 4 lignes et 3 colonnes
+		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 
-		frame.setLayout(layout);  // affection du layout dans la fenÃªtre.
-		frame.setSize(1024, 768); // dÃ©finition de la taille
-		frame.setResizable(false);  // On dÃ©finit la fenÃªtre comme non redimentionnable
+		frame.setLayout(layout);  // affection du layout dans la fenêtre.
+		frame.setSize(1024, 768); // définition de la taille
+		frame.setResizable(false);  // On définit la fenêtre comme non redimentionnable
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenÃªtre on quitte le programme.
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 
 		JButton okButton = createOkButton();
-		
-		/* frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants Ã  la fenÃªtre
-		frame.add(createLabelImage("le havre.jpg"));
-		frame.add(createLabelImage("panneau 70.jpg"));
-		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
-		frame.add(createLabelImage("parking.jpg"));
-		frame.add(createLabelImage("route panneau.jpg"));
-		frame.add(createLabelImage("tour eiffel.jpg"));
-		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg")); */
 		
 		// Fill the grid with random images
 		for (URL image : logicEngine.getGridImages()) {
@@ -109,7 +99,7 @@ public class MainUi {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des Ã©vÃ¨nements
+				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
 
 					@Override
 					public void run() { // c'est un runnable
@@ -119,7 +109,9 @@ public class MainUi {
 							System.out.println("Right, you're not a robot !");
 						} else {
 							System.out.println("Are you dumb or a robot ?");
-							// TODO relancer le captcha avec un niveau de difficultÃ© supÃ©rieur.
+//							logicEngine.increaseDifficultyLevel();
+//							logicEngine.selectRandomCategory();
+//							logicEngine.setGridImages();
 						}
 					}
 				});
@@ -129,7 +121,6 @@ public class MainUi {
 
 	private static JLabel createLabelImage(URL imageLocation) throws IOException{
 
-//		final URL url = MainUi.class.getResource(imageLocation); // Aller chercher les images !! IMPORTANT
 		final URL url = imageLocation;
 
 		System.out.println(url);
@@ -137,11 +128,10 @@ public class MainUi {
 		BufferedImage img = ImageIO.read(url); // Lire l'image
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); // Redimentionner l'image
 
-		final JLabel label = new JLabel(new ImageIcon(sImage)); // crÃ©er le composant pour ajouter l'image dans la fenÃªtre
+		final JLabel label = new JLabel(new ImageIcon(sImage)); // créer le composant pour ajouter l'image dans la fenêtre
 
-		label.addMouseListener(new MouseListener() { // Ajouter le listener d'ï¿½venement de souris
+		label.addMouseListener(new MouseListener() { // Ajouter le listener d'évenement de souris
 			private boolean isSelected = false;
-
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -162,7 +152,7 @@ public class MainUi {
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent arg0) { // Ce qui nous intï¿½resse c'est lorsqu'on clique sur une image, il y a donc des choses ï¿½ faire ici
+			public void mouseClicked(MouseEvent arg0) { // Ce qui nous intéresse c'est lorsqu'on clique sur une image, il y a donc des choses à faire ici
 				EventQueue.invokeLater(new Runnable() {
 
 					@Override
