@@ -76,7 +76,7 @@ abstract public class Category implements Images {
 				images = Files.walk(currentRelativePath, 1)
 				        .map(Path::getFileName)
 				        .map(Path::toString)
-				        .filter(n -> n.contains(".jpg") || n.contains(".png"))
+				        .filter(n -> n.contains(".jpg") || n.contains(".jpeg") || n.contains(".png"))
 				        .collect(Collectors.toList());
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -116,7 +116,6 @@ abstract public class Category implements Images {
 	@Override
 	public boolean isPhotoCorrect(URL url) {
 		String currentCategory = this.getClass().getPackage().getName().replace(".", "/");
-		System.out.println("CATEGORY" + currentCategory);
 		return url.toString().contains(currentCategory);
 	}
 	

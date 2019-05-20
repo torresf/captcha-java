@@ -35,14 +35,11 @@ import fr.upem.captcha.logicengine.LogicEngine;
 public class MainUi {
 
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
+	private static JFrame frame;
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("- Main");
-		
-		LogicEngine logicEngine = LogicEngine.getInstance();
-		String selectedCategory = logicEngine.getSelectedCategory();
 
-		JFrame frame = new JFrame("Captcha"); // Création de la fenêtre principale
+		frame = new JFrame("Captcha"); // Création de la fenêtre principale
 
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 
@@ -52,27 +49,10 @@ public class MainUi {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 
-		JButton okButton = createOkButton();
-		
-		// Fill the grid with random images
-		for (URL image : logicEngine.getGridImages()) {
-			frame.add(createLabelImage(image));
-		}
-		
-		JTextArea instruction1 = createTextArea(1, selectedCategory);
-		frame.add(instruction1);
-
-		frame.add(okButton);
-		
-//		JTextArea instruction2 = createTextArea(2, "");
-//		frame.add(instruction2);
-//		
-//		JTextArea instruction3 = createTextArea(3, "");
-//		frame.add(instruction3);
+		// Fill the grid
+		fillGrid();
 
 		frame.setVisible(true);
-//		frame.getContentPane().validate();
-//		frame.getContentPane().repaint();
 	}
 
 	private static JTextArea createTextArea(int instructionID, String selectedCategory) {
@@ -88,31 +68,61 @@ public class MainUi {
 		}
 	}
 
-	private static GridLayout createLayout(){
+	private static GridLayout createLayout() {
 		return new GridLayout(4,3);
 	}
 
-	private static JButton createOkButton(){
-		return new JButton(new AbstractAction("Check") { // ajouter l'action du bouton
+	private static void fillGrid() throws IOException {
+		// Clear Grid
+		frame.getContentPane().removeAll();
+		
+		// Fill with images 
+		LogicEngine logicEngine = LogicEngine.getInstance();
+		for (URL image : logicEngine.getGridImages()) {
+			frame.add(createLabelImage(image));
+		}
+		
+		// Add Text Area
+		String selectedCategory = logicEngine.getSelectedCategory();
+		JTextArea instruction1 = createTextArea(1, selectedCategory);
+		frame.add(instruction1);
+		
+		// Add ok button
+		JButton okButton = createOkButton();
+		frame.add(okButton);
+		
+		// Refresh the frame
+		frame.validate();
+		frame.repaint();
+	}
+
+	private static JButton createOkButton() {
+		return new JButton(new AbstractAction("Check") { // Ajouter l'action du bouton
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
+				EventQueue.invokeLater(new Runnable() { // Faire des choses dans l'interface donc appeler cela dans la queue des évènements
 
 					@Override
 					public void run() { // c'est un runnable
 						LogicEngine logicEngine = LogicEngine.getInstance();
-						System.out.println("I clicked Ok");
 						if (logicEngine.isCaptchaCorrect(selectedImages)) {
 							System.out.println("Right, you're not a robot !");
 						} else {
 							System.out.println("Are you dumb or a robot ?");
-//							logicEngine.increaseDifficultyLevel();
-//							logicEngine.selectRandomCategory();
-//							logicEngine.setGridImages();
+							logicEngine.clearGrid();
+							logicEngine.increaseDifficultyLevel();
+							logicEngine.selectRandomCategory();
+							logicEngine.setGridImages();
+							try {
+								fillGrid();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
+						selectedImages.clear();
 					}
 				});
 			}
@@ -122,8 +132,6 @@ public class MainUi {
 	private static JLabel createLabelImage(URL imageLocation) throws IOException{
 
 		final URL url = imageLocation;
-
-		System.out.println(url);
 
 		BufferedImage img = ImageIO.read(url); // Lire l'image
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); // Redimentionner l'image

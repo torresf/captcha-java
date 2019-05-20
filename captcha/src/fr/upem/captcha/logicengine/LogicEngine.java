@@ -17,13 +17,16 @@ import fr.upem.captcha.images.Category;
 import fr.upem.captcha.images.animals.Animal;
 import fr.upem.captcha.images.animals.cats.Cat;
 import fr.upem.captcha.images.animals.dogs.Dog;
+import fr.upem.captcha.images.animals.otters.Otter;
 import fr.upem.captcha.images.instruments.Instrument;
 import fr.upem.captcha.images.instruments.flutes.Flute;
 import fr.upem.captcha.images.instruments.guitars.Guitar;
+import fr.upem.captcha.images.instruments.pianos.Piano;
 
 
 public class LogicEngine {
 	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton
+	private static final int MAX_DIFFICULTY_LEVEL = 2; // Maximum difficulty level
 	
 	private ArrayList<Category> categories; // All the categories
 	private Category selectedCategory; // Selected category to click on
@@ -33,11 +36,8 @@ public class LogicEngine {
 	private int numberOfCorrectImages; // Number of correct images to choose
 	private int gridSize = 9; // Maximum number of images in the grid
 	
-	/**
-	 * @param
-	 * LogicEgineConstructor
-	 * Set difficultyLevel at 2
-	 * Create the ArrayList Category
+	/** Logic Engine Constructor
+	 * Sets difficultyLevel at 1
 	 */
 	private LogicEngine() {
 		difficultyLevel = 1;
@@ -48,6 +48,9 @@ public class LogicEngine {
 		setGridImages();
 	}
 	
+	/**
+	 * @return instance of Logic Engine Singleton
+	 */
 	public static final LogicEngine getInstance() 
     {
         return instance;
@@ -59,9 +62,9 @@ public class LogicEngine {
 	 * Initializes and returns the ArrayList of Categories
 	 * @return ArrayList<Category>
 	 * The arraysList depends on the value of difficultyLevel
-	 *
 	 */
 	public ArrayList<Category> getCategories() {
+		categories.clear();
 		switch (difficultyLevel) {
 			case 1:
 				categories.add(new Animal());
@@ -69,9 +72,11 @@ public class LogicEngine {
 				break;
 			case 2:
 				categories.add(new Dog());
-				categories.add(new Guitar());
 				categories.add(new Cat());
+				categories.add(new Otter());
+				categories.add(new Guitar());
 				categories.add(new Flute());
+				categories.add(new Piano());
 				break;
 	
 			default:
@@ -82,19 +87,16 @@ public class LogicEngine {
 		return categories;
 	}
 	
-	/**
-	 * @param
-	 * It increases the difficultyLevel when the user doesn't perform the previous level
-	 * 
+	/** It increases the difficultyLevel when the user doesn't perform the previous level,
+	 * 	and get the new categories
 	 */
 	public void increaseDifficultyLevel() {
-		difficultyLevel++;
+		if (difficultyLevel < MAX_DIFFICULTY_LEVEL) 
+			difficultyLevel++;
+		getCategories();
 	}
 	
-	/**
-	 * @param
-	 * @return a String which is the selected category from the first member of the categories ArrayList
-	 * set the selectedCategory as the first member of the ArrayList
+	/** Shuffles the categories, takes the first one and assign it to selectedCategory
 	 */
 	public void selectRandomCategory() {
 		Collections.shuffle(categories);
@@ -102,18 +104,14 @@ public class LogicEngine {
 	}
 	
 	/**
-	 * @param
-	 * @return String which is the selectedCategory
-	 *
+	 * @return String representing the random selected category
 	 */
 	public String getSelectedCategory() {
 		return selectedCategory.toString();
 	}
 	
-	/**
+	/** Fills the grid with 9 images (1 to 4 correct images, and fill with incorrect images)
 	 * @param
-	 * @return void
-	 *	Fills the grid with the correct and incorrect categories
 	 */
 	public void setGridImages() {
 		// Clear the grid
@@ -185,4 +183,13 @@ public class LogicEngine {
 		}
 		return true;
 	}
+	
+	/**
+	 * Clear the grid
+	 */
+	public void clearGrid() {
+		gridImages.clear();
+	}
+	
+	
 }
