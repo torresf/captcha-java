@@ -49,6 +49,7 @@ public class LogicEngine {
 	}
 	
 	/**
+	 * @param
 	 * @return instance of Logic Engine Singleton
 	 */
 	public static final LogicEngine getInstance() 
@@ -87,8 +88,11 @@ public class LogicEngine {
 		return categories;
 	}
 	
-	/** It increases the difficultyLevel when the user doesn't perform the previous level,
-	 * 	and get the new categories
+	/** 
+	 * It increases the difficultyLevel when the user doesn't perform the previous level,
+	 * and get the new categories
+	 * @param
+	 * @return
 	 */
 	public void increaseDifficultyLevel() {
 		if (difficultyLevel < MAX_DIFFICULTY_LEVEL) 
@@ -96,7 +100,10 @@ public class LogicEngine {
 		getCategories();
 	}
 	
-	/** Shuffles the categories, takes the first one and assign it to selectedCategory
+	/** 
+	 * Shuffles the categories, takes the first one and assign it to selectedCategory
+	 * @param
+	 * @return
 	 */
 	public void selectRandomCategory() {
 		Collections.shuffle(categories);
@@ -104,6 +111,7 @@ public class LogicEngine {
 	}
 	
 	/**
+	 * @param
 	 * @return String representing the random selected category
 	 */
 	public String getSelectedCategory() {
@@ -112,6 +120,7 @@ public class LogicEngine {
 	
 	/** Fills the grid with 9 images (1 to 4 correct images, and fill with incorrect images)
 	 * @param
+	 * @return
 	 */
 	public void setGridImages() {
 		// Clear the grid
@@ -157,7 +166,6 @@ public class LogicEngine {
 	/**
 	 * @param
 	 * @return List<URL> which is the entire grid to display
-	 *
 	 */
 	public List<URL> getGridImages() {
 		return gridImages;
@@ -166,7 +174,6 @@ public class LogicEngine {
 	/**
 	 * @param List<URL> of selected images
 	 * @return boolean if it's correct return true, else false
-	 *
 	 */
 	public boolean isCaptchaCorrect(List<URL> images) {
 		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
@@ -186,6 +193,8 @@ public class LogicEngine {
 	
 	/**
 	 * Clear the grid
+	 * @param
+	 * @return
 	 */
 	public void clearGrid() {
 		gridImages.clear();
