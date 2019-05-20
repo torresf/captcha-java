@@ -26,7 +26,7 @@ import fr.upem.captcha.images.instruments.pianos.Piano;
 
 public class LogicEngine {
 	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton
-	private static final int MAX_DIFFICULTY_LEVEL = 2; // Maximum difficulty level
+	private static final int MAX_DIFFICULTY_LEVEL = 3; // Maximum difficulty level
 	
 	private ArrayList<Category> categories; // All the categories
 	private Category selectedCategory; // Selected category to click on
@@ -79,18 +79,13 @@ public class LogicEngine {
 				categories.add(new Animal());
 				categories.add(new Instrument());
 				break;
-			case 2:
+			default:
 				categories.add(new Dog());
 				categories.add(new Cat());
 				categories.add(new Otter());
 				categories.add(new Guitar());
 				categories.add(new Flute());
 				categories.add(new Piano());
-				break;
-	
-			default:
-				categories.add(new Animal());
-				categories.add(new Instrument());
 				break;
 		}
 		return categories;
@@ -105,6 +100,7 @@ public class LogicEngine {
 	public void increaseDifficultyLevel() {
 		if (difficultyLevel < MAX_DIFFICULTY_LEVEL) 
 			difficultyLevel++;
+			gridSize = difficultyLevel*3 + 6;
 		getCategories();
 	}
 	
@@ -136,7 +132,6 @@ public class LogicEngine {
 		
 		// Set numberOfCorrectImages randomly between 1 and 4
 		this.numberOfCorrectImages = (int)((Math.random() * 4) + 1);
-		
 		// Get some correct images from the selected category
 		correctImages = selectedCategory.getRandomPhotosURL(numberOfCorrectImages);
 		

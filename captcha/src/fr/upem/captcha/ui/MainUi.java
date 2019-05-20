@@ -63,9 +63,9 @@ public class MainUi {
 			case INIT:
 				return new JTextArea(" Difficulty level: " + logicEngine.getDifficultyLevel() + "\n" + " Click on " + selectedCategory + " images.");
 			case SUCCESS:
-				return new JTextArea("You're right, you're not a robot");
+				return new JTextArea("You're right");
 			case FAILED:
-				return new JTextArea("You're wrong, you're a robot or a dumb guy");
+				return new JTextArea("You're wrong");
 			default:
 				return new JTextArea("Click on " + selectedCategory + " images.");
 		}
