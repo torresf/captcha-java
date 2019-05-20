@@ -56,7 +56,15 @@ public class LogicEngine {
     {
         return instance;
     }
-
+	
+	/**
+	 * Getter of the difficultyLevel
+	 * @param
+	 * @return int that is the difficulty level
+	 * */
+	public int getDifficultyLevel() {
+		return difficultyLevel;
+	}
 	
 	/**
 	 * @param

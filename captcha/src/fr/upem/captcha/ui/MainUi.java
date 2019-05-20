@@ -58,9 +58,10 @@ public class MainUi {
 	}
 
 	private static JTextArea createTextArea(int instructionID, String selectedCategory) {
+		LogicEngine logicEngine = LogicEngine.getInstance();
 		switch (instructionID) {
 			case INIT:
-				return new JTextArea("Click on " + selectedCategory + " images.");
+				return new JTextArea(" Difficulty level: " + logicEngine.getDifficultyLevel() + "\n" + " Click on " + selectedCategory + " images.");
 			case SUCCESS:
 				return new JTextArea("You're right, you're not a robot");
 			case FAILED:
