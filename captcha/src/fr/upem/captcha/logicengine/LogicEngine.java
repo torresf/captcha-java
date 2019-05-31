@@ -27,6 +27,7 @@ import fr.upem.captcha.images.instruments.pianos.Piano;
 public class LogicEngine {
 	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton
 	private static final int MAX_DIFFICULTY_LEVEL = 3; // Maximum difficulty level
+	private static int FAILED = 0;
 	
 	private ArrayList<Category> categories; // All the categories
 	private Category selectedCategory; // Selected category to click on
@@ -65,14 +66,30 @@ public class LogicEngine {
 	public int getDifficultyLevel() {
 		return difficultyLevel;
 	}
-	
+
+	/**
+	 * Getter of the FAILED
+	 * @param
+	 * @return int if the captcha test failed
+	 * */
+	public int isFAILED() {
+		return FAILED;
+	}
+	/**
+	 * Stter of the FAILED
+	 * @param
+	 * @return
+	 * */
+	public void setFAILED(int f) {
+		FAILED = f;
+	}
 	/**
 	 * @param
 	 * Initializes and returns the ArrayList of Categories
 	 * @return ArrayList<Category>
 	 * The arraysList depends on the value of difficultyLevel
 	 */
-	public ArrayList<Category> getCategories() {
+	public ArrayList<Category> getCategories() { // To change -> dynamically
 		categories.clear();
 		switch (difficultyLevel) {
 			case 1:
@@ -98,12 +115,16 @@ public class LogicEngine {
 	 * @return
 	 */
 	public void increaseDifficultyLevel() {
-		if (difficultyLevel < MAX_DIFFICULTY_LEVEL) 
+		if (difficultyLevel < MAX_DIFFICULTY_LEVEL) {
 			difficultyLevel++;
 			gridSize = difficultyLevel*3 + 6;
+		}
+		else if(difficultyLevel == MAX_DIFFICULTY_LEVEL) {
+			setFAILED(1);
+		}
 		getCategories();
 	}
-	
+
 	/** 
 	 * Shuffles the categories, takes the first one and assign it to selectedCategory
 	 * @param
@@ -180,7 +201,6 @@ public class LogicEngine {
 	 */
 	public boolean isCaptchaCorrect(List<URL> images) {
 		// TODO : Check nombre d'images selectionnées + si ils sont dans la bonne catégorie
-		System.out.println("numberOfCorrectImages2 : " + numberOfCorrectImages);
 		if (images.size() != numberOfCorrectImages) {
 			System.out.println("You didn't select the correct number of images.");
 			return false;
@@ -202,6 +222,5 @@ public class LogicEngine {
 	public void clearGrid() {
 		gridImages.clear();
 	}
-	
-	
+
 }

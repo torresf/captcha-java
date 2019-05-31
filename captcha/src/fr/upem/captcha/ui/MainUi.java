@@ -38,6 +38,7 @@ public class MainUi {
 	private static final int INIT = 1;
 	private static final int SUCCESS = 2;
 	private static final int FAILED = 3;
+	private static final int END = 4;
 
 	public static void main(String[] args) throws IOException {
 
@@ -66,6 +67,8 @@ public class MainUi {
 				return new JTextArea("You're right");
 			case FAILED:
 				return new JTextArea("You're wrong");
+			case END:
+				return new JTextArea("Test's failed. Quit the captcha.");
 			default:
 				return new JTextArea("Click on " + selectedCategory + " images.");
 		}
@@ -86,6 +89,10 @@ public class MainUi {
 		}
 		
 		if(instruction == SUCCESS) {
+			JButton quitButton = createQuitButton();
+			frame.add(quitButton);
+		}
+		else if(instruction == END) {
 			JButton quitButton = createQuitButton();
 			frame.add(quitButton);
 		}
@@ -151,7 +158,11 @@ public class MainUi {
 							logicEngine.selectRandomCategory();
 							logicEngine.setGridImages();
 							try {
-								fillGrid(FAILED);
+								if(logicEngine.isFAILED()==1) {
+									fillGrid(END);
+								}
+								else
+									fillGrid(FAILED);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}

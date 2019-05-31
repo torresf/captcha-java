@@ -26,12 +26,12 @@ abstract public class Category implements Images {
 		this.photos = new ArrayList<URL>();
 		this.getPhotos();
 	}
-	
+
 	@Override
 	public List<URL> getPhotos() {
 		photos.clear();
 		
-		String packageName = "src/"+this.getClass().getPackage().getName();
+		String packageName = "src/"+this.getClass().getPackage().getName(); // To change -> dynamically
 		String currentPath = packageName.replace('.', '/');
 		Path currentRelativePath = Paths.get(currentPath);
 		
