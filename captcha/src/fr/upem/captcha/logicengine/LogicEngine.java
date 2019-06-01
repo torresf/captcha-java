@@ -176,6 +176,7 @@ public class LogicEngine {
 			}
 		}
 		
+		Collections.shuffle(allIncorrectImages);
 		// We only need (gridSize - numberOfCorrectImages) false images
 		incorrectImages = allIncorrectImages
 				.stream()
