@@ -14,16 +14,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fr.upem.captcha.images.Category;
-import fr.upem.captcha.images.animals.Animal;
-import fr.upem.captcha.images.animals.cats.Cat;
-import fr.upem.captcha.images.animals.dogs.Dog;
-import fr.upem.captcha.images.animals.otters.Otter;
-import fr.upem.captcha.images.instruments.Instrument;
-import fr.upem.captcha.images.instruments.flutes.Flute;
-import fr.upem.captcha.images.instruments.guitars.Guitar;
-import fr.upem.captcha.images.instruments.pianos.Piano;
+import fr.upem.captcha.images.MainCategory;
 
-
+/** Logic Engine Singleton
+ * 	Logic manager of the captcha
+ */
 public class LogicEngine {
 	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton
 	private static final int MAX_DIFFICULTY_LEVEL = 3; // Maximum difficulty level
@@ -75,35 +70,44 @@ public class LogicEngine {
 	public int isFAILED() {
 		return FAILED;
 	}
+	
 	/**
-	 * Stter of the FAILED
+	 * Setter of the FAILED
 	 * @param
 	 * @return
 	 * */
 	public void setFAILED(int f) {
 		FAILED = f;
 	}
+	
 	/**
-	 * @param
 	 * Initializes and returns the ArrayList of Categories
+	 * @param
 	 * @return ArrayList<Category>
 	 * The arraysList depends on the value of difficultyLevel
 	 */
-	public ArrayList<Category> getCategories() { // To change -> dynamically
-		categories.clear();
+	public ArrayList<Category> getCategories() {
+
 		switch (difficultyLevel) {
-			case 1:
-				categories.add(new Animal());
-				categories.add(new Instrument());
+			case 2:
+				if (selectedCategory != null) {
+					categories = selectedCategory.getCategories();
+				}
 				break;
+				
+			case 3:
+				break;
+				
 			default:
-				categories.add(new Dog());
-				categories.add(new Cat());
-				categories.add(new Otter());
-				categories.add(new Guitar());
-				categories.add(new Flute());
-				categories.add(new Piano());
+				categories.clear();
+				MainCategory mainCat = new MainCategory();
+				categories = mainCat.getCategories();
 				break;
+		}
+		
+		if (categories.isEmpty()) {
+			MainCategory mainCat = new MainCategory();
+			categories = mainCat.getCategories();
 		}
 		return categories;
 	}

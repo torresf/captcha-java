@@ -42,15 +42,15 @@ public class MainUi {
 
 	public static void main(String[] args) throws IOException {
 
-		frame = new JFrame("Captcha"); // Cr√©ation de la fen√™tre principale
+		frame = new JFrame("Captcha"); // CrÈation de la fenÍtre principale
 
-		GridLayout layout = createLayout();  // Cr√©ation d'un layout de type Grille avec 4 lignes et 3 colonnes
+		GridLayout layout = createLayout();  // CrÈation d'un layout de type Grille avec 4 lignes et 3 colonnes
 
-		frame.setLayout(layout);  // affection du layout dans la fen√™tre.
-		frame.setSize(1024, 768); // d√©finition de la taille
-		frame.setResizable(false);  // On d√©finit la fen√™tre comme non redimentionnable
+		frame.setLayout(layout);  // affection du layout dans la fenÍtre.
+		frame.setSize(1024, 768); // dÈfinition de la taille
+		frame.setResizable(false);  // On dÈfinit la fenÍtre comme non redimentionnable
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fen√™tre on quitte le programme.
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenÍtre on quitte le programme.
 
 		// Fill the grid
 		fillGrid(0);
@@ -68,7 +68,7 @@ public class MainUi {
 			case FAILED:
 				return new JTextArea("You're wrong");
 			case END:
-				return new JTextArea("Test's failed. Quit the captcha.");
+				return new JTextArea("Test failed. Quit the captcha.");
 			default:
 				return new JTextArea("Click on " + selectedCategory + " images.");
 		}
@@ -88,25 +88,25 @@ public class MainUi {
 			frame.add(createLabelImage(image));
 		}
 		
-		if(instruction == SUCCESS) {
+		// Writes the right instruction
+		if (instruction == SUCCESS) {
 			JButton quitButton = createQuitButton();
 			frame.add(quitButton);
-		}
-		else if(instruction == END) {
+		} else if (instruction == END) {
 			JButton quitButton = createQuitButton();
 			frame.add(quitButton);
-		}
-		else {
+		} else {
 			// Add Text Area
-			String selectedCategory = logicEngine.getSelectedCategory();
-			JTextArea instruction1 = createTextArea(INIT, selectedCategory);
+			JTextArea instruction1 = createTextArea(INIT, logicEngine.getSelectedCategory());
 			frame.add(instruction1);
 		}
 		
-		// Add ok button
-		JButton okButton = createOkButton();
-		frame.add(okButton);
-		if(instruction > 1) {
+		if (instruction != END && instruction != SUCCESS) {
+			// Add ok button
+			JButton okButton = createOkButton();
+			frame.add(okButton);
+		}
+		if (instruction > 1) {
 			JTextArea instruction3 = createTextArea(instruction, "");
 			frame.add(instruction3);
 		}
@@ -123,7 +123,7 @@ public class MainUi {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // Faire des choses dans l'interface donc appeler cela dans la queue des √©v√®nements
+				EventQueue.invokeLater(new Runnable() { // Faire des choses dans l'interface donc appeler cela dans la queue des Èv√®nements
 
 					@Override
 					public void run() { // c'est un runnable
@@ -141,7 +141,7 @@ public class MainUi {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // Faire des choses dans l'interface donc appeler cela dans la queue des √©v√®nements
+				EventQueue.invokeLater(new Runnable() { // Faire des choses dans l'interface donc appeler cela dans la queue des Èv√®nements
 
 					@Override
 					public void run() { // c'est un runnable
@@ -181,9 +181,9 @@ public class MainUi {
 		BufferedImage img = ImageIO.read(url); // Lire l'image
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); // Redimentionner l'image
 
-		final JLabel label = new JLabel(new ImageIcon(sImage)); // cr√©er le composant pour ajouter l'image dans la fen√™tre
+		final JLabel label = new JLabel(new ImageIcon(sImage)); // crÈer le composant pour ajouter l'image dans la fenÍtre
 
-		label.addMouseListener(new MouseListener() { // Ajouter le listener d'√©v√®nement de souris
+		label.addMouseListener(new MouseListener() { // Ajouter le listener d'Èv√®nement de souris
 			private boolean isSelected = false;
 
 			@Override
@@ -205,7 +205,7 @@ public class MainUi {
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent arg0) { // Ce qui nous int√©resse c'est lorsqu'on clique sur une image, il y a donc des choses √† faire ici
+			public void mouseClicked(MouseEvent arg0) { // Ce qui nous intÈresse c'est lorsqu'on clique sur une image, il y a donc des choses √† faire ici
 				EventQueue.invokeLater(new Runnable() {
 
 					@Override
