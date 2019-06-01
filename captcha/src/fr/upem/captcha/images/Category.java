@@ -20,26 +20,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+/**	
+ * Abstract class that is the parent 
+ * category of all others categories
+ */
 abstract public class Category implements Images {
 	private List<URL> photos = new ArrayList<URL>();
-	
+
 	public Category() {
 		super();
 		this.photos = new ArrayList<URL>();
 	}
-	
+
 	public Path getPath() {
 		StringBuilder packageName = new StringBuilder();
 		packageName.append(System.getProperty("user.dir"));
 		packageName.append("/");
-		
+
 		// If launched using eclipse (not added in .jar)
 		if (new File (packageName.toString() + "/bin").exists()) {
 			packageName.append("bin/");
 		}
-		
+
 		packageName.append(this.getClass().getPackage().getName().replace(".", "/"));
-		
+
 		return Paths.get(packageName.toString());
 	}
 	

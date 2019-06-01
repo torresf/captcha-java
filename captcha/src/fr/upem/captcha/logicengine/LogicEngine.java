@@ -17,7 +17,7 @@ import fr.upem.captcha.images.Category;
 import fr.upem.captcha.images.MainCategory;
 
 /** Logic Engine Singleton
- * 	Logic manager of the captcha
+ * 	- Logic manager of the captcha
  */
 public class LogicEngine {
 	private static final LogicEngine instance = new LogicEngine(); // Instance of the singleton

@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.List;
 
 
+/**	
+ * Images interface is used to manage photos of the captcha
+ */
 public interface Images {
 
 	/**
